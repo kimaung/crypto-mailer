@@ -20,7 +20,7 @@ def fetch_crypto_data(api_key):
         'X-CMC_PRO_API_KEY': api_key,  
     }  
     response = requests.get(url, headers=headers, params=parameters)  
-    response.raise_for_status()  # Raise an error for bad responses  
+    response.raise_for_status()
     return response.json()  
   
 def format_crypto_data(data):  
@@ -92,7 +92,7 @@ def send_email(html_content):
     if not email_to:      
         raise ValueError("EMAIL_TO environment variable is not set or is empty")      
       
-    subject = 'Crypto Data Update'      
+    subject = 'Crypto Price Update'      
     msg = MIMEMultipart()      
     msg['From'] = f"{sender_name} <{email_user}>"      
     msg['To'] = email_to      
