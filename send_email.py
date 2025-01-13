@@ -51,89 +51,103 @@ html_content = """
             margin: 0;  
             padding: 20px;  
         }  
-        table {  
+        .container {  
+            max-width: 100%;  
+            margin: 0 auto;  
+            padding: 20px;  
+            background-color: #fff;  
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);  
+        }  
+        h2 {  
+            text-align: center;  
+            color: #333;  
+        }  
+        .table-responsive-stack {  
             width: 100%;  
             border-collapse: collapse;  
             margin: 20px 0;  
             box-shadow: 0 2px 3px rgba(0,0,0,0.1);  
         }  
-        th, td {  
+        .table-responsive-stack tr {  
+            display: -webkit-box;  
+            display: -ms-flexbox;  
+            display: flex;  
+            -webkit-box-orient: horizontal;  
+            -webkit-box-direction: normal;  
+                -ms-flex-direction: row;  
+                    flex-direction: row;  
+        }  
+        .table-responsive-stack th,  
+        .table-responsive-stack td {  
+            display: block;  
+            flex-grow: 1;  
+            flex-shrink: 1;  
+            flex-basis: 100%;  
             padding: 12px;  
             text-align: left;  
             border-bottom: 1px solid #ddd;  
         }  
-        th {  
+        .table-responsive-stack th {  
             background-color: #4CAF50;  
             color: white;  
         }  
-        tr:hover {  
+        .table-responsive-stack tr:hover {  
             background-color: #f1f1f1;  
         }  
-        @media screen and (max-width: 600px) {  
-            table, thead, tbody, th, td, tr {  
+        .table-responsive-stack-thead {  
+            font-weight: bold;  
+        }  
+        @media screen and (max-width: 768px) {  
+            .table-responsive-stack tr {  
+                -webkit-box-orient: vertical;  
+                -webkit-box-direction: normal;  
+                    -ms-flex-direction: column;  
+                        flex-direction: column;  
+                border-bottom: 3px solid #ccc;  
                 display: block;  
             }  
-            thead tr {  
-                position: absolute;  
-                top: -9999px;  
-                left: -9999px;  
-            }  
-            tr {  
-                border: 1px solid #ccc;  
-                margin-bottom: 10px;  
-                display: block;  
-            }  
-            td {  
-                border: none;  
-                border-bottom: 1px solid #eee;  
-                position: relative;  
-                padding-left: 50%;  
-            }  
-            td:before {  
-                position: absolute;  
-                top: 6px;  
-                left: 6px;  
-                width: 45%;  
-                padding-right: 10px;  
-                white-space: nowrap;  
-                content: attr(data-label);  
+            .table-responsive-stack td {  
+                float: left\9;  
+                width: 100%;  
             }  
         }  
     </style>  
 </head>  
 <body>  
-    <h1>Crypto Data Update</h1>  
-    <table>  
-        <thead>  
-            <tr>  
-                <th>Symbol</th>  
-                <th>Name</th>  
-                <th>Price (USD)</th>  
-                <th>Volume 24h (USD)</th>  
-                <th>Market Cap (USD)</th>  
-                <th>24h Change (%)</th>  
-                <th>Circulating Supply</th>  
-            </tr>  
-        </thead>  
-        <tbody>  
+    <div class="container">  
+        <h2>Crypto Data Update</h2>  
+        <table class="table-responsive-stack" id="tableOne">  
+            <thead class="thead-dark">  
+                <tr>  
+                    <th>Symbol</th>  
+                    <th>Name</th>  
+                    <th>Price (USD)</th>  
+                    <th>Volume 24h (USD)</th>  
+                    <th>Market Cap (USD)</th>  
+                    <th>24h Change (%)</th>  
+                    <th>Circulating Supply</th>  
+                </tr>  
+            </thead>  
+            <tbody>  
 """  
   
 for crypto in cryptocurrencies:  
     html_content += f"""  
-        <tr>  
-            <td data-label="Symbol">{crypto['symbol']}</td>  
-            <td data-label="Name">{crypto['name']}</td>  
-            <td data-label="Price (USD)">${crypto['price']:,.2f}</td>  
-            <td data-label="Volume 24h (USD)">${crypto['volume_24h']:,.2f}</td>  
-            <td data-label="Market Cap (USD)">${crypto['market_cap']:,.2f}</td>  
-            <td data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>  
-            <td data-label="Circulating Supply">{crypto['circulating_supply']:,}</td>  
-        </tr>  
+                <tr>  
+                    <td data-label="Symbol">{crypto['symbol']}</td>  
+                    <td data-label="Name">{crypto['name']}</td>  
+                    <td data-label="Price (USD)">${crypto['price']:,.2f}</td>  
+                    <td data-label="Volume 24h (USD)">${crypto['volume_24h']:,.2f}</td>  
+                    <td data-label="Market Cap (USD)">${crypto['market_cap']:,.2f}</td>  
+                    <td data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>  
+                    <td data-label="Circulating Supply">{crypto['circulating_supply']:,}</td>  
+                </tr>  
     """  
   
 html_content += """  
-        </tbody>  
-    </table>  
+            </tbody>  
+        </table>  
+    </div>  
 </body>  
 </html>  
 """  
