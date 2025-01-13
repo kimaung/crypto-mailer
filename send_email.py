@@ -96,12 +96,15 @@ def send_email(html_content):
     msg.attach(MIMEText(html_content, 'html'))    
     
     try:    
+        print(f"Connecting to SMTP server: {smtp_server}...")
         with smtplib.SMTP(smtp_server, 587) as server:    
             server.starttls()    
             server.login(email_user, email_pass)    
             server.sendmail(email_user, email_to, msg.as_string())    
+            print("Email sent successfully.")    
     except Exception as e:    
         print(f"Error sending email: {e}")    
+
     
 def main():    
     try:    
