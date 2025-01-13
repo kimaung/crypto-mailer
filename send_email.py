@@ -22,7 +22,9 @@ data = response.json()
   
 # Memformat data menjadi JSON yang diinginkan  
 cryptocurrencies = []  
-for entry in data['data'].values():  
+for symbol, entries in data['data'].items():  
+    # Ambil entri pertama untuk setiap simbol  
+    entry = entries[0]  
     crypto = {  
         'symbol': entry['symbol'],  
         'name': entry['name'],  
