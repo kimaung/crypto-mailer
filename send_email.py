@@ -1,139 +1,99 @@
-import os    
-import requests    
-import smtplib    
-from email.mime.text import MIMEText    
-from email.mime.multipart import MIMEMultipart    
-    
-# Mengambil API key dari variabel lingkungan    
-api_key = os.getenv('CMC_API_KEY')    
-url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest'    
-parameters = {    
-    'symbol': 'BTC,ETH,XRP,BNB,SOL',    
-    'convert': 'USD'    
-}    
-headers = {    
-    'Accepts': 'application/json',    
-    'X-CMC_PRO_API_KEY': api_key,    
-}    
-    
-# Mengambil data dari CoinMarketCap    
-response = requests.get(url, headers=headers, params=parameters)    
-data = response.json()    
-    
-# Memformat data menjadi JSON yang diinginkan      
-cryptocurrencies = []      
-for symbol, entries in data['data'].items():      
-    # Ambil entri pertama untuk setiap simbol      
-    entry = entries[0]      
-    crypto = {      
-        'name': entry['name'],      
-        'price': entry['quote']['USD']['price'],      
-        'percent_change_24h': entry['quote']['USD']['percent_change_24h'],      
-    }      
-    cryptocurrencies.append(crypto)    
-    
-# Membuat konten HTML dengan CSS inline    
-html_content = """    
-<!DOCTYPE html>    
-<html lang="en">    
-<head>    
-    <meta charset="UTF-8">    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <title>Crypto Data Update</title>    
-    <style>    
-        body {    
-            font-family: Arial, sans-serif;    
-            background-color: #f4f4f9;    
-            margin: 0;    
-            padding: 20px;    
-            color: #333;    
-        }    
-        .container {    
-            max-width: 1200px;    
-            margin: 0 auto;    
-        }    
-        h1 {    
-            text-align: center;    
-            margin-bottom: 20px;    
-        }    
-        .table-responsive {    
-            width: 100%;    
-            overflow-x: auto;    
-            margin-bottom: 20px;    
-        }    
-        table {    
-            width: 100%;    
-            border-collapse: collapse;    
-            margin: 20px 0;    
-            box-shadow: 0 2px 3px rgba(0,0,0,0.1);    
-        }    
-        th, td {    
-            padding: 12px;    
-            text-align: left;    
-            border-bottom: 1px solid #ddd;    
-        }    
-        th {    
-            background-color: #6200ea;    
-            color: white;    
-        }    
-        tr:hover {    
-            background-color: #f1f1f1;    
-        }    
-    </style>    
-</head>    
-<body>    
-    <div class="container">    
-        <h1>Crypto Data Update</h1>    
-        <div class="table-responsive">    
-            <table>    
-                <thead>    
-                    <tr>    
-                        <th>Name</th>    
-                        <th>Price (USD)</th>    
-                        <th>24h Change (%)</th>    
-                    </tr>    
-                </thead>    
-                <tbody>    
-"""  
-  
-for crypto in cryptocurrencies:    
-    html_content += f"""    
-        <tr>    
-            <td data-label="Name">{crypto['name']}</td>    
-            <td data-label="Price (USD)">${crypto['price']:,.2f}</td>    
-            <td data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>    
-        </tr>    
-    """    
-  
-html_content += """    
-                </tbody>    
-            </table>    
-        </div>    
-    </div>    
-</body>    
-</html>    
+import os      
+import requests      
+import smtplib      
+from email.mime.text import MIMEText      
+from email.mime.multipart import MIMEMultipart      
+      
+# Mengambil API key dari variabel lingkungan      
+api_key = os.getenv('CMC_API_KEY')      
+url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest'      
+parameters = {      
+    'symbol': 'BTC,ETH,XRP,BNB,SOL',      
+    'convert': 'USD'      
+}      
+headers = {      
+    'Accepts': 'application/json',      
+    'X-CMC_PRO_API_KEY': api_key,      
+}      
+      
+# Mengambil data dari CoinMarketCap      
+response = requests.get(url, headers=headers, params=parameters)      
+data = response.json()      
+      
+# Memformat data menjadi JSON yang diinginkan        
+cryptocurrencies = []        
+for symbol, entries in data['data'].items():        
+    # Ambil entri pertama untuk setiap simbol        
+    entry = entries[0]        
+    crypto = {        
+        'name': entry['name'],        
+        'price': entry['quote']['USD']['price'],        
+        'percent_change_24h': entry['quote']['USD']['percent_change_24h'],        
+    }        
+    cryptocurrencies.append(crypto)      
+      
+# Membuat konten HTML dengan CSS inline      
+html_content = """      
+<!DOCTYPE html>      
+<html lang="en">      
+<head>      
+    <meta charset="UTF-8">      
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">      
+    <title>Crypto Data Update</title>      
+</head>      
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; color: #333;">      
+    <div style="max-width: 1200px; margin: 0 auto;">      
+        <h1 style="text-align: center; margin-bottom: 20px;">Crypto Data Update</h1>      
+        <div style="width: 100%; overflow-x: auto; margin-bottom: 20px;">      
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 3px rgba(0,0,0,0.1);">      
+                <thead>      
+                    <tr>      
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; background-color: #6200ea; color: white;">Name</th>      
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; background-color: #6200ea; color: white;">Price (USD)</th>      
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; background-color: #6200ea; color: white;">24h Change (%)</th>      
+                    </tr>      
+                </thead>      
+                <tbody>      
 """    
     
-# Mengirim email    
-email_user = os.getenv('EMAIL_USER')    
-email_pass = os.getenv('EMAIL_PASS')    
-email_to = os.getenv('EMAIL_TO')    
+for crypto in cryptocurrencies:      
+    html_content += f"""      
+        <tr style="background-color: {('#f1f1f1' if crypto['percent_change_24h'] < 0 else 'transparent')};">      
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Name">{crypto['name']}</td>      
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Price (USD)">${crypto['price']:,.2f}</td>      
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>      
+        </tr>      
+    """      
     
-if not email_to:    
-    raise ValueError("EMAIL_TO environment variable is not set or is empty")    
-    
-subject = 'Crypto Data Update'    
-msg = MIMEMultipart()    
-msg['From'] = email_user    
-msg['To'] = email_to    
-msg['Subject'] = subject    
-    
-# Menambahkan konten HTML ke email    
-msg.attach(MIMEText(html_content, 'html'))    
-    
-server = smtplib.SMTP('mail.aes.my.id', 587)    
-server.starttls()    
-server.login(email_user, email_pass)    
-text = msg.as_string()    
-server.sendmail(email_user, email_to, text)    
-server.quit()    
+html_content += """      
+                </tbody>      
+            </table>      
+        </div>      
+    </div>      
+</body>      
+</html>      
+"""      
+      
+# Mengirim email      
+email_user = os.getenv('EMAIL_USER')      
+email_pass = os.getenv('EMAIL_PASS')      
+email_to = os.getenv('EMAIL_TO')      
+      
+if not email_to:      
+    raise ValueError("EMAIL_TO environment variable is not set or is empty")      
+      
+subject = 'Crypto Data Update'      
+msg = MIMEMultipart()      
+msg['From'] = email_user      
+msg['To'] = email_to      
+msg['Subject'] = subject      
+      
+# Menambahkan konten HTML ke email      
+msg.attach(MIMEText(html_content, 'html'))      
+      
+server = smtplib.SMTP('mail.aes.my.id', 587)      
+server.starttls()      
+server.login(email_user, email_pass)      
+text = msg.as_string()      
+server.sendmail(email_user, email_to, text)      
+server.quit()      
