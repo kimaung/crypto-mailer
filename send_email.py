@@ -48,7 +48,7 @@ def generate_html_content(cryptocurrencies):
     </head>        
     <body style="font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; color: #333;">        
         <div style="max-width: 1200px; margin: 0 auto;">        
-            <h1 style="text-align: center; margin-bottom: 20px;">Crypto Price Update 💵</h1>       
+            <h1 style="text-align: center; margin-bottom: 20px;">Crypto Price Update 🕵🏼</h1>       
             <div style="width: 100%; overflow-x: auto; margin-bottom: 20px;">        
                 <table style="width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 3px rgba(0,0,0,0.1);">        
                     <thead>        
