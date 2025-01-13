@@ -30,7 +30,7 @@ for entry in data['data'].values():
         'volume_24h': entry['quote']['USD']['volume_24h'],  
         'market_cap': entry['quote']['USD']['market_cap'],  
         'percent_change_24h': entry['quote']['USD']['percent_change_24h'],  
-        'circulating_supply': entry['circulating_supply']  
+        'circulating_supply': entry.get('circulating_supply', None)  
     }  
     cryptocurrencies.append(crypto)  
   
@@ -53,7 +53,7 @@ msg['Subject'] = subject
   
 msg.attach(MIMEText(body, 'plain'))  
   
-server = smtplib.SMTP('smtp.gmail.com', 587)  
+server = smtplib.SMTP('mail.aes.my.id', 587)  
 server.starttls()  
 server.login(email_user, email_pass)  
 text = msg.as_string()  
