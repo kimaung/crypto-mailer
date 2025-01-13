@@ -78,13 +78,16 @@ html_content += """
 email_user = os.getenv('EMAIL_USER')      
 email_pass = os.getenv('EMAIL_PASS')      
 email_to = os.getenv('EMAIL_TO')      
+sender_name = 'Crypto Update'
       
 if not email_to:      
     raise ValueError("EMAIL_TO environment variable is not set or is empty")      
+if not sender_name:      
+    raise ValueError("EMAIL_SENDER_NAME environment variable is not set or is empty")      
       
 subject = 'Crypto Data Update'      
 msg = MIMEMultipart()      
-msg['From'] = email_user      
+msg['From'] = f"{sender_name} <{email_user}>"  # Menambahkan nama pengirim      
 msg['To'] = email_to      
 msg['Subject'] = subject      
       
