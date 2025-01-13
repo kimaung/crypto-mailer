@@ -36,7 +36,7 @@ for symbol, entries in data['data'].items():
     }  
     cryptocurrencies.append(crypto)  
   
-# Membuat konten HTML  
+# Membuat konten HTML dengan CSS inline  
 html_content = """  
 <!DOCTYPE html>  
 <html lang="en">  
@@ -77,7 +77,7 @@ html_content = """
             border-bottom: 1px solid #ddd;  
         }  
         th {  
-            background-color: #4CAF50;  
+            background-color: #6200ea;  
             color: white;  
         }  
         tr:hover {  
@@ -113,26 +113,6 @@ html_content = """
                 content: attr(data-label);  
             }  
         }  
-        /* Modern Design Enhancements */  
-        .table-responsive table {  
-            border-radius: 8px;  
-            overflow: hidden;  
-        }  
-        .table-responsive th {  
-            background-color: #6200ea;  
-        }  
-        .table-responsive tr:nth-child(even) {  
-            background-color: #f9f9f9;  
-        }  
-        .table-responsive tr:nth-child(odd) {  
-            background-color: #ffffff;  
-        }  
-        .table-responsive td {  
-            color: #555;  
-        }  
-        .table-responsive tr:hover {  
-            background-color: #e0e0e0;  
-        }  
     </style>  
 </head>  
 <body>  
@@ -142,13 +122,13 @@ html_content = """
             <table>  
                 <thead>  
                     <tr>  
-                        <th>Symbol</th>  
-                        <th>Name</th>  
-                        <th>Price (USD)</th>  
-                        <th>Volume 24h (USD)</th>  
-                        <th>Market Cap (USD)</th>  
-                        <th>24h Change (%)</th>  
-                        <th>Circulating Supply</th>  
+                        <th style="background-color: #6200ea; color: white; padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Symbol</th>  
+                        <th style="background-color: #6200ea; color: white; padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Name</th>  
+                        <th style="background-color: #6200ea; color: white; padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Price (USD)</th>  
+                        <th style="background-color: #6200ea; color: white; padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Volume 24h (USD)</th>  
+                        <th style="background-color: #6200ea; color: white; padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Market Cap (USD)</th>  
+                        <th style="background-color: #6200ea; color: white; padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">24h Change (%)</th>  
+                        <th style="background-color: #6200ea; color: white; padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Circulating Supply</th>  
                     </tr>  
                 </thead>  
                 <tbody>  
@@ -157,13 +137,13 @@ html_content = """
 for crypto in cryptocurrencies:  
     html_content += f"""  
         <tr>  
-            <td data-label="Symbol">{crypto['symbol']}</td>  
-            <td data-label="Name">{crypto['name']}</td>  
-            <td data-label="Price (USD)">${crypto['price']:,.2f}</td>  
-            <td data-label="Volume 24h (USD)">${crypto['volume_24h']:,.2f}</td>  
-            <td data-label="Market Cap (USD)">${crypto['market_cap']:,.2f}</td>  
-            <td data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>  
-            <td data-label="Circulating Supply">{crypto['circulating_supply']:,}</td>  
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Symbol">{crypto['symbol']}</td>  
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Name">{crypto['name']}</td>  
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Price (USD)">${crypto['price']:,.2f}</td>  
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Volume 24h (USD)">${crypto['volume_24h']:,.2f}</td>  
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Market Cap (USD)">${crypto['market_cap']:,.2f}</td>  
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>  
+            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;" data-label="Circulating Supply">{crypto['circulating_supply']:,}</td>  
         </tr>  
     """  
   
