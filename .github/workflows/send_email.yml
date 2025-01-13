@@ -1,6 +1,9 @@
 name: Send Email with Crypto Data
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '0 0 * * *'
 
