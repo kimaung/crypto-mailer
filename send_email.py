@@ -50,103 +50,127 @@ html_content = """
             background-color: #f4f4f9;  
             margin: 0;  
             padding: 20px;  
-        }  
-        .container {  
-            max-width: 100%;  
-            margin: 0 auto;  
-            padding: 20px;  
-            background-color: #fff;  
-            box-shadow: 0 2px 3px rgba(0,0,0,0.1);  
-        }  
-        h2 {  
-            text-align: center;  
             color: #333;  
         }  
-        .table-responsive-stack {  
+        .container {  
+            max-width: 1200px;  
+            margin: 0 auto;  
+        }  
+        h1 {  
+            text-align: center;  
+            margin-bottom: 20px;  
+        }  
+        .table-responsive {  
+            width: 100%;  
+            overflow-x: auto;  
+            margin-bottom: 20px;  
+        }  
+        table {  
             width: 100%;  
             border-collapse: collapse;  
             margin: 20px 0;  
             box-shadow: 0 2px 3px rgba(0,0,0,0.1);  
         }  
-        .table-responsive-stack tr {  
-            display: -webkit-box;  
-            display: -ms-flexbox;  
-            display: flex;  
-            -webkit-box-orient: horizontal;  
-            -webkit-box-direction: normal;  
-                -ms-flex-direction: row;  
-                    flex-direction: row;  
-        }  
-        .table-responsive-stack th,  
-        .table-responsive-stack td {  
-            display: block;  
-            flex-grow: 1;  
-            flex-shrink: 1;  
-            flex-basis: 100%;  
+        th, td {  
             padding: 12px;  
             text-align: left;  
             border-bottom: 1px solid #ddd;  
         }  
-        .table-responsive-stack th {  
+        th {  
             background-color: #4CAF50;  
             color: white;  
         }  
-        .table-responsive-stack tr:hover {  
+        tr:hover {  
             background-color: #f1f1f1;  
         }  
-        .table-responsive-stack-thead {  
-            font-weight: bold;  
-        }  
-        @media screen and (max-width: 768px) {  
-            .table-responsive-stack tr {  
-                -webkit-box-orient: vertical;  
-                -webkit-box-direction: normal;  
-                    -ms-flex-direction: column;  
-                        flex-direction: column;  
-                border-bottom: 3px solid #ccc;  
+        @media screen and (max-width: 600px) {  
+            table, thead, tbody, th, td, tr {  
                 display: block;  
             }  
-            .table-responsive-stack td {  
-                float: left\9;  
-                width: 100%;  
+            thead tr {  
+                position: absolute;  
+                top: -9999px;  
+                left: -9999px;  
             }  
+            tr {  
+                border: 1px solid #ccc;  
+                margin-bottom: 10px;  
+                display: block;  
+            }  
+            td {  
+                border: none;  
+                border-bottom: 1px solid #eee;  
+                position: relative;  
+                padding-left: 50%;  
+            }  
+            td:before {  
+                position: absolute;  
+                top: 6px;  
+                left: 6px;  
+                width: 45%;  
+                padding-right: 10px;  
+                white-space: nowrap;  
+                content: attr(data-label);  
+            }  
+        }  
+        /* Modern Design Enhancements */  
+        .table-responsive table {  
+            border-radius: 8px;  
+            overflow: hidden;  
+        }  
+        .table-responsive th {  
+            background-color: #6200ea;  
+        }  
+        .table-responsive tr:nth-child(even) {  
+            background-color: #f9f9f9;  
+        }  
+        .table-responsive tr:nth-child(odd) {  
+            background-color: #ffffff;  
+        }  
+        .table-responsive td {  
+            color: #555;  
+        }  
+        .table-responsive tr:hover {  
+            background-color: #e0e0e0;  
         }  
     </style>  
 </head>  
 <body>  
     <div class="container">  
-        <h2>Crypto Data Update</h2>  
-        <table class="table-responsive-stack" id="tableOne">  
-            <thead class="thead-dark">  
-                <tr>  
-                    <th>Symbol</th>  
-                    <th>Name</th>  
-                    <th>Price (USD)</th>  
-                    <th>Volume 24h (USD)</th>  
-                    <th>Market Cap (USD)</th>  
-                    <th>24h Change (%)</th>  
-                    <th>Circulating Supply</th>  
-                </tr>  
-            </thead>  
-            <tbody>  
+        <h1>Crypto Data Update</h1>  
+        <div class="table-responsive">  
+            <table>  
+                <thead>  
+                    <tr>  
+                        <th>Symbol</th>  
+                        <th>Name</th>  
+                        <th>Price (USD)</th>  
+                        <th>Volume 24h (USD)</th>  
+                        <th>Market Cap (USD)</th>  
+                        <th>24h Change (%)</th>  
+                        <th>Circulating Supply</th>  
+                    </tr>  
+                </thead>  
+                <tbody>  
 """  
   
 for crypto in cryptocurrencies:  
     html_content += f"""  
-                <tr>  
-                    <td data-label="Symbol">{crypto['symbol']}</td>  
-                    <td data-label="Name">{crypto['name']}</td>  
-                    <td data-label="Price (USD)">${crypto['price']:,.2f}</td>  
-                    <td data-label="Volume 24h (USD)">${crypto['volume_24h']:,.2f}</td>  
-                    <td data-label="Market Cap (USD)">${crypto['market_cap']:,.2f}</td>  
-                    <td data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>  
-                    <td data-label="Circulating Supply">{crypto['circulating_supply']:,}</td>  
-                </tr>  
+        <tr>  
+            <td data-label="Symbol">{crypto['symbol']}</td>  
+            <td data-label="Name">{crypto['name']}</td>  
+            <td data-label="Price (USD)">${crypto['price']:,.2f}</td>  
+            <td data-label="Volume 24h (USD)">${crypto['volume_24h']:,.2f}</td>  
+            <td data-label="Market Cap (USD)">${crypto['market_cap']:,.2f}</td>  
+            <td data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>  
+            <td data-label="Circulating Supply">{crypto['circulating_supply']:,}</td>  
+        </tr>  
     """  
   
 html_content += """  
-            </tbody>  
-        </table>  
+                </tbody>  
+            </table>  
+        </div>  
     </div>  
 </body>  
 </html>  
