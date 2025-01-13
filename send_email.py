@@ -36,24 +36,124 @@ for symbol, entries in data['data'].items():
     }  
     cryptocurrencies.append(crypto)  
   
-json_data = {  
-    'cryptocurrencies': cryptocurrencies  
-}  
+# Membuat konten HTML  
+html_content = """  
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Crypto Data Update</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f4f4f9;  
+            margin: 0;  
+            padding: 20px;  
+        }  
+        table {  
+            width: 100%;  
+            border-collapse: collapse;  
+            margin: 20px 0;  
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);  
+        }  
+        th, td {  
+            padding: 12px;  
+            text-align: left;  
+            border-bottom: 1px solid #ddd;  
+        }  
+        th {  
+            background-color: #4CAF50;  
+            color: white;  
+        }  
+        tr:hover {  
+            background-color: #f1f1f1;  
+        }  
+        @media screen and (max-width: 600px) {  
+            table, thead, tbody, th, td, tr {  
+                display: block;  
+            }  
+            thead tr {  
+                position: absolute;  
+                top: -9999px;  
+                left: -9999px;  
+            }  
+            tr {  
+                border: 1px solid #ccc;  
+                margin-bottom: 10px;  
+                display: block;  
+            }  
+            td {  
+                border: none;  
+                border-bottom: 1px solid #eee;  
+                position: relative;  
+                padding-left: 50%;  
+            }  
+            td:before {  
+                position: absolute;  
+                top: 6px;  
+                left: 6px;  
+                width: 45%;  
+                padding-right: 10px;  
+                white-space: nowrap;  
+                content: attr(data-label);  
+            }  
+        }  
+    </style>  
+</head>  
+<body>  
+    <h1>Crypto Data Update</h1>  
+    <table>  
+        <thead>  
+            <tr>  
+                <th>Symbol</th>  
+                <th>Name</th>  
+                <th>Price (USD)</th>  
+                <th>Volume 24h (USD)</th>  
+                <th>Market Cap (USD)</th>  
+                <th>24h Change (%)</th>  
+                <th>Circulating Supply</th>  
+            </tr>  
+        </thead>  
+        <tbody>  
+"""  
+  
+for crypto in cryptocurrencies:  
+    html_content += f"""  
+        <tr>  
+            <td data-label="Symbol">{crypto['symbol']}</td>  
+            <td data-label="Name">{crypto['name']}</td>  
+            <td data-label="Price (USD)">${crypto['price']:,.2f}</td>  
+            <td data-label="Volume 24h (USD)">${crypto['volume_24h']:,.2f}</td>  
+            <td data-label="Market Cap (USD)">${crypto['market_cap']:,.2f}</td>  
+            <td data-label="24h Change (%)">{crypto['percent_change_24h']:.2f}%</td>  
+            <td data-label="Circulating Supply">{crypto['circulating_supply']:,}</td>  
+        </tr>  
+    """  
+  
+html_content += """  
+        </tbody>  
+    </table>  
+</body>  
+</html>  
+"""  
   
 # Mengirim email  
 email_user = os.getenv('EMAIL_USER')  
 email_pass = os.getenv('EMAIL_PASS')  
 email_to = os.getenv('EMAIL_TO')  
   
-subject = 'Crypto Data Update'  
-body = str(json_data)  
+if not email_to:  
+    raise ValueError("EMAIL_TO environment variable is not set or is empty")  
   
+subject = 'Crypto Data Update'  
 msg = MIMEMultipart()  
 msg['From'] = email_user  
 msg['To'] = email_to  
 msg['Subject'] = subject  
   
-msg.attach(MIMEText(body, 'plain'))  
+# Menambahkan konten HTML ke email  
+msg.attach(MIMEText(html_content, 'html'))  
   
 server = smtplib.SMTP('mail.aes.my.id', 587)  
 server.starttls()  
