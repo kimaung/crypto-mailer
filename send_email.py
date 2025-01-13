@@ -39,7 +39,7 @@ def generate_html_content(cryptocurrencies):
     <head>    
         <meta charset="UTF-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>Crypto Data Update</title>    
+        <title>Crypto Price 🕵🏻‍♂️</title>    
     </head>    
     <body style="font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; color: #333;">    
         <div style="max-width: 1200px; margin: 0 auto;">    
@@ -80,6 +80,7 @@ def send_email(html_content):
     email_user = os.getenv('EMAIL_USER')  
     email_pass = os.getenv('EMAIL_PASS')  
     email_to = os.getenv('EMAIL_TO')  
+    smtp_server = os.getenv('SMTP_SERVER')
     sender_name = 'Crypto Update'  
   
     if not email_to:  
@@ -93,7 +94,7 @@ def send_email(html_content):
   
     msg.attach(MIMEText(html_content, 'html'))  
   
-    with smtplib.SMTP('mail.aes.my.id', 587) as server:  
+    with smtplib.SMTP(smtp_server, 587) as server:  
         server.starttls()  
         server.login(email_user, email_pass)  
         server.sendmail(email_user, email_to, msg.as_string())  
